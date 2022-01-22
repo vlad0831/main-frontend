@@ -1,0 +1,25 @@
+{
+  "plugins": [
+    "babel-plugin-styled-components",
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "src": "./src",
+          "components": "./src/components",
+          "utils": "./src/utils",
+          "api": "./src/api",
+          "models": "./src/models",
+          "store": "./src/store",
+          "routes": "./src/routes",
+          "screens": "./src/screens",
+          "services": "./src/services",
+          "theme": "./src/theme",
+          "providers": "./src/providers",
+          "graphql": "./src/graphql"
+        }
+      }
+    ]
+  ]
+}

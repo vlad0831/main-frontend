@@ -1,0 +1,147 @@
+diff --git a/node_modules/@aws-amplify/auth/lib-esm/Auth.d.ts b/node_modules/@aws-amplify/auth/lib-esm/Auth.d.ts
+index c5274c6..48f2c84 100644
+--- a/node_modules/@aws-amplify/auth/lib-esm/Auth.d.ts
++++ b/node_modules/@aws-amplify/auth/lib-esm/Auth.d.ts
+@@ -38,7 +38,7 @@ export declare class AuthClass {
+      * @param {ConfirmSignUpOptions} options - other options for confirm signup
+      * @return - A promise resolves callback data if success
+      */
+-    confirmSignUp(username: string, code: string, options?: ConfirmSignUpOptions): Promise<any>;
++    confirmSignUp(username: string, code: string, options?: ConfirmSignUpOptions): Promise<'SUCCESS'>;
+     /**
+      * Resend the verification code
+      * @param {String} username - The username to be confirmed
+@@ -52,7 +52,7 @@ export declare class AuthClass {
+      * @param {String} password - The password of the username
+      * @return - A promise resolves the CognitoUser
+      */
+-    signIn(usernameOrSignInOpts: string | SignInOpts, pw?: string, clientMetadata?: ClientMetaData): Promise<CognitoUser | any>;
++    signIn(usernameOrSignInOpts: string | SignInOpts, pw?: string, clientMetadata?: ClientMetaData): Promise<CognitoUser>;
+     /**
+      * Return an object with the authentication callbacks
+      * @param {CognitoUser} user - the cognito user object
+@@ -83,13 +83,13 @@ export declare class AuthClass {
+      * @param {CognitoUser} user - the current user
+      * @return - A promise resolves the current preferred mfa option if success
+      */
+-    getMFAOptions(user: CognitoUser | any): Promise<MFAOption[]>;
++    getMFAOptions(user: CognitoUser): Promise<MFAOption[]>;
+     /**
+      * get preferred mfa method
+      * @param {CognitoUser} user - the current cognito user
+      * @param {GetPreferredMFAOpts} params - options for getting the current user preferred MFA
+      */
+-    getPreferredMFA(user: CognitoUser | any, params?: GetPreferredMFAOpts): Promise<string>;
++    getPreferredMFA(user: CognitoUser, params?: GetPreferredMFAOpts): Promise<string>;
+     private _getMfaTypeFromUserData;
+     private _getUserData;
+     /**
+@@ -98,7 +98,7 @@ export declare class AuthClass {
+      * @param {string} mfaMethod - preferred mfa method
+      * @return - A promise resolve if success
+      */
+-    setPreferredMFA(user: CognitoUser | any, mfaMethod: 'TOTP' | 'SMS' | 'NOMFA' | 'SMS_MFA' | 'SOFTWARE_TOKEN_MFA'): Promise<string>;
++    setPreferredMFA(user: CognitoUser, mfaMethod: 'TOTP' | 'SMS' | 'NOMFA' | 'SMS_MFA' | 'SOFTWARE_TOKEN_MFA'): Promise<string>;
+     /**
+      * disable SMS
+      * @deprecated
+@@ -118,46 +118,46 @@ export declare class AuthClass {
+      * @param {CognitoUser} user - the current user
+      * @return - A promise resolves with the secret code if success
+      */
+-    setupTOTP(user: CognitoUser | any): Promise<string>;
++    setupTOTP(user: CognitoUser): Promise<string>;
+     /**
+      * verify TOTP setup
+      * @param {CognitoUser} user - the current user
+      * @param {string} challengeAnswer - challenge answer
+      * @return - A promise resolves is success
+      */
+-    verifyTotpToken(user: CognitoUser | any, challengeAnswer: string): Promise<CognitoUserSession>;
++    verifyTotpToken(user: CognitoUser, challengeAnswer: string): Promise<CognitoUserSession>;
+     /**
+      * Send MFA code to confirm sign in
+      * @param {Object} user - The CognitoUser object
+      * @param {String} code - The confirmation code
+      */
+-    confirmSignIn(user: CognitoUser | any, code: string, mfaType?: 'SMS_MFA' | 'SOFTWARE_TOKEN_MFA' | null, clientMetadata?: ClientMetaData): Promise<CognitoUser | any>;
+-    completeNewPassword(user: CognitoUser | any, password: string, requiredAttributes?: any, clientMetadata?: ClientMetaData): Promise<CognitoUser | any>;
++    confirmSignIn(user: CognitoUser, code: string, mfaType?: 'SMS_MFA' | 'SOFTWARE_TOKEN_MFA' | null, clientMetadata?: ClientMetaData): Promise<CognitoUser>;
++    completeNewPassword(user: CognitoUser, password: string, requiredAttributes?: any, clientMetadata?: ClientMetaData): Promise<CognitoUser>;
+     /**
+      * Send the answer to a custom challenge
+      * @param {CognitoUser} user - The CognitoUser object
+      * @param {String} challengeResponses - The confirmation code
+      */
+-    sendCustomChallengeAnswer(user: CognitoUser | any, challengeResponses: string, clientMetadata?: ClientMetaData): Promise<CognitoUser | any>;
++    sendCustomChallengeAnswer(user: CognitoUser, challengeResponses: string, clientMetadata?: ClientMetaData): Promise<CognitoUser>;
+     /**
+      * Delete an authenticated users' attributes
+      * @param {CognitoUser} - The currently logged in user object
+      * @return {Promise}
+      **/
+-    deleteUserAttributes(user: CognitoUser | any, attributeNames: string[]): Promise<unknown>;
++    deleteUserAttributes(user: CognitoUser, attributeNames: string[]): Promise<unknown>;
+     /**
+      * Update an authenticated users' attributes
+      * @param {CognitoUser} - The currently logged in user object
+      * @return {Promise}
+      **/
+-    updateUserAttributes(user: CognitoUser | any, attributes: object, clientMetadata?: ClientMetaData): Promise<string>;
++    updateUserAttributes(user: CognitoUser, attributes: object, clientMetadata?: ClientMetaData): Promise<string>;
+     /**
+      * Return user attributes
+      * @param {Object} user - The CognitoUser object
+      * @return - A promise resolves to user attributes if success
+      */
+-    userAttributes(user: CognitoUser | any): Promise<CognitoUserAttribute[]>;
+-    verifiedContact(user: CognitoUser | any): Promise<{
++    userAttributes(user: CognitoUser): Promise<CognitoUserAttribute[]>;
++    verifiedContact(user: CognitoUser): Promise<{
+         verified: {};
+         unverified: {};
+     }>;
+@@ -165,14 +165,14 @@ export declare class AuthClass {
+      * Get current authenticated user
+      * @return - A promise resolves to current authenticated CognitoUser if success
+      */
+-    currentUserPoolUser(params?: CurrentUserOpts): Promise<CognitoUser | any>;
++    currentUserPoolUser(params?: CurrentUserOpts): Promise<CognitoUser>;
+     private isOAuthInProgress;
+     /**
+      * Get current authenticated user
+      * @param {CurrentUserOpts} - options for getting the current user
+      * @return - A promise resolves to current authenticated CognitoUser if success
+      */
+-    currentAuthenticatedUser(params?: CurrentUserOpts): Promise<CognitoUser | any>;
++    currentAuthenticatedUser(params?: CurrentUserOpts): Promise<CognitoUser>;
+     /**
+      * Get current user's session
+      * @return - A promise resolves to session object if success
+@@ -196,7 +196,7 @@ export declare class AuthClass {
+      * @param {Object} attr - The attributes to be verified
+      * @return - A promise resolves to callback data if success
+      */
+-    verifyUserAttribute(user: CognitoUser | any, attr: string, clientMetadata?: ClientMetaData): Promise<void>;
++    verifyUserAttribute(user: CognitoUser, attr: string, clientMetadata?: ClientMetaData): Promise<void>;
+     /**
+      * Confirm an attribute using a confirmation code
+      * @param {Object} user - The CognitoUser
+@@ -204,7 +204,7 @@ export declare class AuthClass {
+      * @param {String} code - The confirmation code
+      * @return - A promise resolves to callback data if success
+      */
+-    verifyUserAttributeSubmit(user: CognitoUser | any, attr: string, code: string): Promise<string>;
++    verifyUserAttributeSubmit(user: CognitoUser, attr: string, code: string): Promise<string>;
+     verifyCurrentUserAttribute(attr: string): Promise<void>;
+     /**
+      * Confirm current user's attribute using a confirmation code
+@@ -231,7 +231,7 @@ export declare class AuthClass {
+      * @param {String} newPassword - the requested new password
+      * @return - A promise resolves if success
+      */
+-    changePassword(user: CognitoUser | any, oldPassword: string, newPassword: string, clientMetadata?: ClientMetaData): Promise<'SUCCESS'>;
++    changePassword(user: CognitoUser, oldPassword: string, newPassword: string, clientMetadata?: ClientMetaData): Promise<'SUCCESS'>;
+     /**
+      * Initiate a forgot password request
+      * @param {String} username - the username to change password

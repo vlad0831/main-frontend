@@ -1,0 +1,6 @@
+index.js
+metro.config.js
+babel.config.js
+.eslintrc.js
+node_modules
+__tests__
